@@ -1,6 +1,5 @@
 import { verify } from "crypto";
 import mongoose, { trusted } from "mongoose";
-import { unique } from "next/dist/build/utils";
 
 const userSchema = new mongoose.Schema({
     username: {
