@@ -2,8 +2,9 @@
 import Link from "next/link";
 import React, {useEffect} from "react";
 import {useRouter} from "next/navigation";
-// import axios from "axios";
-// import { toast } from "react-hot-toast";
+import axios from "axios";
+import { toast } from "react-hot-toast";
+import { set } from "mongoose";
 
 
 export default function LoginPage() {
@@ -17,9 +18,28 @@ export default function LoginPage() {
     const [loading, setLoading] = React.useState(false);
 
 
-    const onLogin = async () => {}
+    const onLogin = async () => {
+        try {
+            setLoading(true)
+            const response = await axios.post("/api/users/login", user)
+            console.log("Login successful", response.data)
+            toast.success("Login successful")
+            router.push("/")
+        } catch (error : any) {
+            console.log("Login error", error.message)
+            toast.error("Login error: " + error.message)
+        } finally {
+            setLoading(false);
+        }
+    }
 
-    useEffect(() => {}, [user]);
+    useEffect(() => {
+        if(user.email.length > 0 && user.password.length > 0) {
+            setButtonDisabled(false);
+        } else {
+            setButtonDisabled(false)
+        }
+    }, [user]);
 
     return (
     <div className="flex flex-col items-center justify-center min-h-screen py-2">
