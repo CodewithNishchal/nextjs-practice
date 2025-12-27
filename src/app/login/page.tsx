@@ -5,6 +5,7 @@ import {useRouter} from "next/navigation";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 import { set } from "mongoose";
+import LoginForm from "@/components/forms/LoginForm";
 
 
 export default function LoginPage() {
@@ -24,7 +25,7 @@ export default function LoginPage() {
             const response = await axios.post("/api/users/login", user)
             console.log("Login successful", response.data)
             toast.success("Login successful")
-            router.push("/")
+            router.push("/profile")
         } catch (error : any) {
             console.log("Login error", error.message)
             toast.error("Login error: " + error.message)
@@ -43,6 +44,7 @@ export default function LoginPage() {
 
     return (
     <div className="flex flex-col items-center justify-center min-h-screen py-2">
+        <LoginForm />
         <h1>{loading ? "Processing" : "Login"}</h1>
         <hr />
         
